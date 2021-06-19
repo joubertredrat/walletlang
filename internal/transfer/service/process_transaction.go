@@ -46,6 +46,9 @@ func (p *ProcessTransaction) HandleProcess(ID string) (*entity.Transaction, erro
 	}
 
 	if transaction.Amount > payer.Amount {
+		transaction.SetStatusInsufficientFunds()
+		p.TransactionRepository.Update(*transaction)
+
 		return nil, ProcessTransactionInsufficientFundsError
 	}
 
@@ -59,6 +62,7 @@ func (p *ProcessTransaction) HandleProcess(ID string) (*entity.Transaction, erro
 	if err := p.UserRepository.UpdatePayee(payee); err != nil {
 		return nil, ProcessTransactionWalletMovementError
 	}
+	p.TransactionRepository.Update(*transaction)
 
 	return transaction, nil
 }

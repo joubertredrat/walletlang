@@ -12,5 +12,6 @@ var (
 
 type TransactionRepository interface {
 	Create(transaction entity.Transaction) (*entity.Transaction, error)
+	Update(transaction entity.Transaction) error
 	GetByID(ID string) (*entity.Transaction, error)
 }
