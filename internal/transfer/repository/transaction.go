@@ -6,11 +6,11 @@ import (
 	"github.com/joubertredrat/walletlang/internal/transfer/entity"
 )
 
+var (
+	TransactionNotFoundError = errors.New("Transaction not found in transaction repository")
+)
+
 type TransactionRepository interface {
-	Create(transaction entity.Transaction) error
+	Create(transaction entity.Transaction) (*entity.Transaction, error)
 	GetByID(ID string) (*entity.Transaction, error)
 }
-
-var (
-	TransactionNotFoundError = errors.New("Transaction not found")
-)
