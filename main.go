@@ -1,7 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"github.com/joubertredrat/walletlang/cmd"
+)
 
 func main() {
-	fmt.Println("Hi")
+	cmd.Execute()
 }
