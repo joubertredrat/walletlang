@@ -3,6 +3,7 @@ package entity
 const (
 	TRANSACTION_STATUS_SCHEDULED       = "scheduled"
 	TRANSACTION_STATUS_ERROR_SCHEDULED = "error_scheduled"
+	TRANSACTION_STATUS_DONE            = "done"
 )
 
 type Transaction struct {
@@ -24,4 +25,8 @@ func NewTransactionScheduled(Payer Payer, Payee Payee, Amount uint) Transaction 
 
 func (t *Transaction) SetStatusErrorScheduled() {
 	t.Status = TRANSACTION_STATUS_ERROR_SCHEDULED
+}
+
+func (t *Transaction) SetStatusDone() {
+	t.Status = TRANSACTION_STATUS_DONE
 }

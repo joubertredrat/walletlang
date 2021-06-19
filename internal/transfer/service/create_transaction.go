@@ -37,7 +37,7 @@ func NewCreateTransaction(
 func (c *CreateTransaction) HandleCreate(payerID, payeeID string, amount uint) (*entity.Transaction, error) {
 	payer, err := c.UserRepository.GetPayerByID(payerID)
 	if err != nil {
-		if errors.Is(err, repository.PayerNotFoundError) {
+		if errors.Is(err, repository.UserRepositoryPayerNotFoundError) {
 			return nil, CreateTransactionPayerNotFoundError
 		}
 
@@ -46,7 +46,7 @@ func (c *CreateTransaction) HandleCreate(payerID, payeeID string, amount uint) (
 
 	payee, err := c.UserRepository.GetPayeeByID(payeeID)
 	if err != nil {
-		if errors.Is(err, repository.PayeeNotFoundError) {
+		if errors.Is(err, repository.UserRepositoryPayeeNotFoundError) {
 			return nil, CreateTransactionPayeeNotFoundError
 		}
 

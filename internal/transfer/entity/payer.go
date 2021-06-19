@@ -1,7 +1,8 @@
 package entity
 
 type Payer struct {
-	ID string
+	ID     string
+	Amount uint
 }
 
 func NewPayer(ID string) Payer {
