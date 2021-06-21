@@ -21,6 +21,7 @@ func Execute() {
 	})
 	rootCmd.AddCommand(NewApiCommand())
 	rootCmd.AddCommand(NewProcessComand())
+	rootCmd.AddCommand(NewFixtureCommand())
 
 	if err := rootCmd.Execute(); err != nil {
 		log.Fatal(nil, "Error to execute cobra command", err)

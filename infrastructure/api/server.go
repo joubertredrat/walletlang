@@ -10,7 +10,6 @@ func Run() {
 	controller := NewController()
 
 	router := gin.Default()
-	router.POST("/api/wallets/seed", controller.handleWalletsSeed)
 	router.POST("/api/wallets", controller.handleWalletsList)
 	router.POST("/api/transactions", controller.handleTransactionSchedule)
 

@@ -13,16 +13,6 @@ func NewController() Controller {
 	return Controller{}
 }
 
-func (c *Controller) handleWalletsSeed(ctx *gin.Context) {
-	response := struct {
-		Message string `json:"message"`
-	}{
-		Message: "seed aplied",
-	}
-
-	ctx.JSON(http.StatusCreated, response)
-}
-
 func (c *Controller) handleWalletsList(ctx *gin.Context) {
 	response := struct {
 		Message string `json:"message"`
