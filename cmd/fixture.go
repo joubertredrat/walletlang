@@ -19,13 +19,13 @@ func NewFixtureCommand() *cobra.Command {
 			repo := repository.NewUserRepositoryMongo(db)
 
 			payers := []*entity.Payer{
-				&entity.Payer{
+				{
 					Amount: 100,
 				},
-				&entity.Payer{
+				{
 					Amount: 200,
 				},
-				&entity.Payer{
+				{
 					Amount: 150,
 				},
 			}
