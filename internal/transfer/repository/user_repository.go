@@ -14,6 +14,8 @@ var (
 type UserRepository interface {
 	GetPayerByID(ID string) (*entity.Payer, error)
 	GetPayeeByID(ID string) (*entity.Payee, error)
-	UpdatePayer(payer *entity.Payer) error
-	UpdatePayee(payee *entity.Payee) error
+	CreatePayer(payer *entity.Payer) (*entity.Payer, error)
+	CreatePayee(payee *entity.Payee) (*entity.Payee, error)
+	UpdatePayer(payer *entity.Payer) (*entity.Payer, error)
+	UpdatePayee(payee *entity.Payee) (*entity.Payee, error)
 }

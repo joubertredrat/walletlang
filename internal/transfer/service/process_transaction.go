@@ -56,10 +56,10 @@ func (p *ProcessTransaction) HandleProcess(ID string) (*entity.Transaction, erro
 	payee.Amount = payee.Amount + transaction.Amount
 	transaction.SetStatusDone()
 
-	if err := p.UserRepository.UpdatePayer(payer); err != nil {
+	if _, err := p.UserRepository.UpdatePayer(payer); err != nil {
 		return nil, ProcessTransactionWalletMovementError
 	}
-	if err := p.UserRepository.UpdatePayee(payee); err != nil {
+	if _, err := p.UserRepository.UpdatePayee(payee); err != nil {
 		return nil, ProcessTransactionWalletMovementError
 	}
 	p.TransactionRepository.Update(*transaction)
