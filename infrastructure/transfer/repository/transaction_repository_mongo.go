@@ -2,7 +2,6 @@ package repository
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"github.com/google/uuid"
@@ -31,7 +30,7 @@ func (r *TransactionRepositoryMongo) Create(transaction entity.Transaction) (*en
 	document := dao.Transaction{
 		AppID:     uuid.NewString(),
 		PayerID:   transaction.Payer.ID,
-		PayeeID:   transaction.Payer.ID,
+		PayeeID:   transaction.Payee.ID,
 		Amount:    transaction.Amount,
 		Status:    transaction.Status,
 		CreatedAt: time.Now(),
@@ -59,10 +58,7 @@ func (r *TransactionRepositoryMongo) Update(transaction entity.Transaction) erro
 		"updated_at": time.Now(),
 	}}}
 
-	fmt.Println(documentData)
-
 	if _, err := r.db.Collection(TRANSACTIONS_COLLECTION).UpdateOne(ctx, filterID, documentData, options); err != nil {
-		fmt.Println(err)
 		return err
 	}
 
@@ -70,5 +66,20 @@ func (r *TransactionRepositoryMongo) Update(transaction entity.Transaction) erro
 }
 
 func (r *TransactionRepositoryMongo) GetByID(ID string) (*entity.Transaction, error) {
-	return nil, nil
+	filterID := bson.D{{"app_id", ID}}
+	var transactionDao dao.Transaction
+
+	if err := r.db.Collection(TRANSACTIONS_COLLECTION).FindOne(context.Background(), filterID).Decode(&transactionDao); err != nil {
+		return nil, err
+	}
+
+	transaction := &entity.Transaction{
+		ID:     transactionDao.AppID,
+		Payer:  entity.NewPayer(transactionDao.PayerID),
+		Payee:  entity.NewPayee(transactionDao.PayeeID),
+		Amount: transactionDao.Amount,
+		Status: transactionDao.Status,
+	}
+
+	return transaction, nil
 }

@@ -10,6 +10,7 @@ import (
 var (
 	ProcessTransactionHoustonError           = errors.New("Anything wrong is not right on process transaction")
 	ProcessTransactionNotFoundError          = errors.New("Transaction not found on process transaction")
+	ProcessTransactionPayerPayeeSameError    = errors.New("Payer and payee can not be same")
 	ProcessTransactionInsufficientFundsError = errors.New("Insufficient payer funds on process transaction")
 	ProcessTransactionWalletMovementError    = errors.New("Error on wallet movement on process transaction ")
 )
@@ -45,10 +46,15 @@ func (p *ProcessTransaction) HandleProcess(ID string) (*entity.Transaction, erro
 		return nil, ProcessTransactionHoustonError
 	}
 
+	if payer.ID == payee.ID {
+		transaction.SetStatusPayerPayeeSame()
+		p.TransactionRepository.Update(*transaction)
+		return nil, ProcessTransactionPayerPayeeSameError
+	}
+
 	if transaction.Amount > payer.Amount {
 		transaction.SetStatusInsufficientFunds()
 		p.TransactionRepository.Update(*transaction)
-
 		return nil, ProcessTransactionInsufficientFundsError
 	}
 

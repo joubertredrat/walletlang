@@ -4,6 +4,7 @@ const (
 	TRANSACTION_STATUS_SCHEDULED          = "scheduled"
 	TRANSACTION_STATUS_ERROR_SCHEDULED    = "error_scheduled"
 	TRANSACTION_STATUS_INSUFFICIENT_FUNDS = "insufficient_funds"
+	TRANSACTION_STATUS_PAYER_PAYEE_SAME   = "payer_payee_same"
 	TRANSACTION_STATUS_DONE               = "done"
 )
 
@@ -30,6 +31,10 @@ func (t *Transaction) SetStatusErrorScheduled() {
 
 func (t *Transaction) SetStatusInsufficientFunds() {
 	t.Status = TRANSACTION_STATUS_INSUFFICIENT_FUNDS
+}
+
+func (t *Transaction) SetStatusPayerPayeeSame() {
+	t.Status = TRANSACTION_STATUS_PAYER_PAYEE_SAME
 }
 
 func (t *Transaction) SetStatusDone() {
