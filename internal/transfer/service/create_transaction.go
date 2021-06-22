@@ -60,6 +60,8 @@ func (c *CreateTransaction) HandleCreate(payerID, payeeID string, amount uint) (
 
 	errEvent := c.TransactionEvent.DispatchWasScheduled(transaction)
 	if errEvent != nil {
+		transaction.SetStatusErrorScheduled()
+		c.TransactionRepository.Update(*transaction)
 		return nil, CreateTransactionEventScheduledError
 	}
 
