@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	"time"
 
 	"github.com/Shopify/sarama"
 	"github.com/joubertredrat/walletlang/infrastructure/database"
@@ -42,12 +43,15 @@ func NewProcessComand() *cobra.Command {
 			signals := make(chan os.Signal, 1)
 			signal.Notify(signals, os.Interrupt)
 			doneCh := make(chan struct{})
+
+			log.Println("Starting running proccess worker")
 			go func() {
 				for {
 					select {
 					case err := <-consumer.Errors():
 						log.Println(err)
 					case msg := <-consumer.Messages():
+						time.Sleep(8 * time.Second)
 						log.Println("Received event", string(msg.Key), string(msg.Value))
 						var transactionScheduleRequest entity.TransactionScheduled
 						json.Unmarshal([]byte(msg.Value), &transactionScheduleRequest)
