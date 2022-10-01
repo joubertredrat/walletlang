@@ -169,6 +169,9 @@ func TestCreateTransactionHandleCreate(t *testing.T) {
 					transaction.ID = "7004f709-5779-4472-80af-4b5338758a6c"
 					return &transaction, nil
 				}
+				repo.FakeUpdate = func(transaction entity.Transaction) error {
+					return nil
+				}
 
 				return repo
 			},
